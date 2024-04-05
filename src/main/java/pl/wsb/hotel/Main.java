@@ -1,5 +1,5 @@
-package pl.wsb.examples.hotel;
-import pl.wsb.examples.hotel.model.*;
+package pl.wsb.hotel;
+import pl.wsb.hotel.model.*;
 import java.time.LocalDate;
 
 public class Main {
@@ -17,10 +17,13 @@ public class Main {
 
             RoomReservation reservation = new RoomReservation(LocalDate.now(), client, room);
 
-
             System.out.println("Rezerwacja potwierdzona: " + reservation.isConfirmed());
             reservation.confirmReservation();
             System.out.println("Rezerwacja potwierdzona: " + reservation.isConfirmed());
+
+            System.out.println(reservation.getRoom().getPrice());
+            room.setPrice(100);
+            System.out.println(reservation.getRoom().getPrice());
         }
     }
 

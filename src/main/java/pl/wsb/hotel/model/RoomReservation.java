@@ -1,4 +1,4 @@
-package pl.wsb.examples.hotel.model;
+package pl.wsb.hotel.model;
 import java.time.LocalDate;
 
 public class RoomReservation {
