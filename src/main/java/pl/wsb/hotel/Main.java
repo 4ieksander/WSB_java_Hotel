@@ -1,6 +1,11 @@
 package pl.wsb.hotel;
 import pl.wsb.hotel.model.*;
+import pl.wsb.hotel.service.SpecialService;
+
 import java.time.LocalDate;
+import java.util.*;
+
+import static java.lang.System.out;
 
 public class Main {
 
@@ -24,6 +29,16 @@ public class Main {
             System.out.println(reservation.getRoom().getPrice());
             room.setPrice(100);
             System.out.println(reservation.getRoom().getPrice());
+
+            Map<Integer, Room> rooms = new HashMap<>();
+            Set<SpecialService> services= new HashSet<>();
+            rooms.put(1, room);
+
+            Hotel hotel = new Hotel("Hotel Testowy", services, rooms);
+
+            out.println(hotel.getName());
+            out.println(hotel.getRooms());
+
         }
     }
 
