@@ -2,7 +2,8 @@ package pl.wsb.hotel;
 import pl.wsb.hotel.model.*;
 import pl.wsb.hotel.service.HotelService;
 import pl.wsb.hotel.service.SpecialService;
-
+import pl.wsb.hotel.model.PremiumClient;
+import pl.wsb.hotel.model.PremiumClient.PremiumAccountType;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -20,6 +21,14 @@ public class Main {
             int client_age = client.getAge();
             System.out.println("Klient o ID " + client_id + " ma " + client_age + " lat, a nazywa się " + client_name);
 
+            PremiumClient premiumClient = new PremiumClient("2", LocalDate.of(1985, 10, 15), "Anna", "Nowak", "anna@nowak.com", "987654321", "Kraków", PremiumAccountType.PREMIUM);
+            PremiumClient premiumPlusClient = new PremiumClient("3", LocalDate.of(1975, 10, 15), "barbara", "testowa", "basia@nowak.com", "333333333", "sieradz", PremiumAccountType.PREMIUM_PLUS);
+
+            String premiumClientFullName = premiumClient.getFullName();
+            String premiumPlusClientFullName = premiumPlusClient.getFullName();
+
+            out.println(premiumClientFullName);
+            out.println(premiumPlusClientFullName);
 
             RoomReservation reservation = new RoomReservation(LocalDate.now(), client, room);
 
