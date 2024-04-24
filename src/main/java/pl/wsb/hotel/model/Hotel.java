@@ -5,38 +5,37 @@ import java.util.*;
 
 public class Hotel {
     private String name;
-    private Set<SpecialService> specialServices;
-    private Map<Integer, Room> rooms;
-    private List<Client> clients;
-    private List<RoomReservation> reservations;
+    private Set<SpecialService> specialServices = new HashSet<>();
+    private Map<Integer, Room> rooms = new HashMap<>();
+    private List<Client> clients = new ArrayList<>();
+    private Map<String, RoomReservation> reservations = new HashMap<>();
 
 
+    // Constructors
     public Hotel(String name, Set<SpecialService> specialServices, Map<Integer, Room> rooms, List<Client> clients) {
         this.name = name;
         this.clients = clients;
         this.specialServices = specialServices;
         this.rooms = rooms;
-        reservations = new ArrayList<>();
-
     }
 
     public Hotel(String name, Set<SpecialService> specialServices, Map<Integer, Room> rooms) {
         this.name = name;
         this.specialServices = specialServices;
         this.rooms = rooms;
-        clients = new ArrayList<>();
-        reservations = new ArrayList<>();
     }
 
+    public Hotel(String name, Map<Integer, Room> rooms) {
+        this.name = name;
+        this.rooms = rooms;
+    }
 
     public Hotel(String name) {
         this.name = name;
-        specialServices = new HashSet<>();
-        clients = new ArrayList<>();
-        rooms = new HashMap<>();
-        reservations = new ArrayList<>();
     }
 
+
+    // Getters and Setters
     public String getName() {
         return name;
     }
@@ -69,11 +68,11 @@ public class Hotel {
         this.clients = clients;
     }
 
-    public List<RoomReservation> getReservations() {
+    public Map<String, RoomReservation> getReservations() {
         return reservations;
     }
 
-    public void setReservations(List<RoomReservation> reservations) {
+    public void setReservations(Map<String, RoomReservation> reservations) {
         this.reservations = reservations;
     }
 }

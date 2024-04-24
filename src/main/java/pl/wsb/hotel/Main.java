@@ -1,5 +1,6 @@
 package pl.wsb.hotel;
 import pl.wsb.hotel.model.*;
+import pl.wsb.hotel.service.HotelService;
 import pl.wsb.hotel.service.SpecialService;
 
 import java.time.LocalDate;
@@ -30,13 +31,14 @@ public class Main {
             room.setPrice(100);
             System.out.println(reservation.getRoom().getPrice());
 
-            Map<Integer, Room> rooms = new HashMap<>();
-            Set<SpecialService> services= new HashSet<>();
-            rooms.put(1, room);
 
-            Hotel hotel = new Hotel("Hotel Testowy", services, rooms);
+            Hotel hotel = new Hotel("Hotel Testowy");
+            HotelService hotelService = new HotelService(hotel);
+            hotelService.addClient(client);
+            hotelService.addReservation("Rezerwacja1", reservation);
+            hotelService.addRoom(room);
 
-            out.println(hotel.getName());
+            out.println(hotelService);
             out.println(hotel.getRooms());
 
         }
