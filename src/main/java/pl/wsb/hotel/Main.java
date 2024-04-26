@@ -5,6 +5,8 @@ import pl.wsb.hotel.service.SpecialService;
 import pl.wsb.hotel.model.PremiumClient;
 import pl.wsb.hotel.model.PremiumClient.PremiumAccountType;
 import java.time.LocalDate;
+import pl.wsb.hotel.model.TimeService;
+import pl.wsb.hotel.model.LuggageService;
 import java.util.*;
 
 import static java.lang.System.out;
@@ -39,6 +41,12 @@ public class Main {
             System.out.println(reservation.getRoom().getPrice());
             room.setPrice(100);
             System.out.println(reservation.getRoom().getPrice());
+
+            TimeService timeService = new TimeService(client_name);
+            LuggageService luggageService = new LuggageService(client_name);
+
+            timeService.orderService();
+            luggageService.orderService();
 
 
             Hotel hotel = new Hotel("Hotel Testowy");

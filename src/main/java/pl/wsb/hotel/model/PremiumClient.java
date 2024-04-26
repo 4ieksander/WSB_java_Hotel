@@ -24,4 +24,8 @@ public class PremiumClient extends Client {
         this.premiumAccountType = premiumAccountType;
     }
 
+    public PremiumAccountType getPremiumAccountType() {
+        return premiumAccountType;
+    }
+
 }
