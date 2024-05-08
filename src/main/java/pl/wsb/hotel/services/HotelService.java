@@ -59,6 +59,13 @@ public class HotelService implements HotelCapability{
         }
         return count;
     }
+    @Override
+    public String addRoom(double area, int floor, boolean hasKingSizeBed, String description){
+        String roomId = UUID.randomUUID().toString();
+        Room newRoom = new Room(roomId, null, area, floor,hasKingSizeBed,0,false,0);
+        this.hotel.getRooms().put(this.findFirstAvailableRoomNumber(), newRoom);
+        return roomId;
+    }
 
     public Client getClientById(String clientId) {
         for (Client client : this.hotel.getClients()) {
