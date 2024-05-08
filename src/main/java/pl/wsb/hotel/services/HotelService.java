@@ -20,7 +20,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class HotelService implements HotelCapability{
-    private final Hotel hotel;
+    final Hotel hotel;
 
     public HotelService(Hotel hotel) {
         this.hotel = hotel;
