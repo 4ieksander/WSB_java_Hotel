@@ -33,6 +33,11 @@ public class HotelService implements HotelCapability{
         this.hotel.getClients().add(client);
         return client.getId();
     }
+    //////////////////////////////
+    //CLIENTS/////////////////////
+
+
+
     @Override
     public String addClient(String firstName, String lastName, LocalDate birthDate){
         String clientId = UUID.randomUUID().toString();
@@ -90,6 +95,12 @@ public class HotelService implements HotelCapability{
         }
         return counter;
     }
+
+
+
+    // reservations ///
+    //////////////////
+
     public Client getClientById(String clientId) {
         for (Client client : this.hotel.getClients()) {
             if (client.getId().equals(clientId)) {
