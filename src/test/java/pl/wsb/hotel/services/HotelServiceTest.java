@@ -48,7 +48,7 @@ class HotelServiceTest {
     @Test
     void shouldHandleMultipleClients() {
         // given
-        service.addClient("Anna", "Kowalska", LocalDate.of(1992, 2, 2));
+        service.addClient("TestFirstName1", "TestLastName1", LocalDate.of(1992, 2, 2));
 
         // when
         int numberOfClients = service.hotel.getClients().size();
@@ -74,5 +74,27 @@ class HotelServiceTest {
         }, "Should throw ClientNotFoundException for a non-existent client ID");
     }
 
+    @Test
+    void shouldCountZeroUnderageClientsWhenAllAreAdults() {
+        // given
+        service.addClient("TestFirstName1", "TestLastName1", LocalDate.now().minusYears(20));
 
+        // when
+        int underageCount = service.getNumberOfUnderageClients();
+
+        // then
+        assertEquals(0, underageCount, "Should count zero underage clients when all clients are adults");
+    }
+
+    @Test
+    void shouldCountUnderageClientsCorrectly() {
+        service.addClient("TestFirstName1", "TestLastName1", LocalDate.now().minusYears(12));
+        service.addClient("TestFirstName2", "TestLastName2", LocalDate.now().minusYears(11));
+        // when
+        int underageCount = service.getNumberOfUnderageClients();
+
+        // then
+        assertEquals(2, underageCount, "Should correctly count the number of underage clients");
+    }
 }
+
