@@ -1,6 +1,7 @@
 package pl.wsb.hotel.services;
 
 import pl.wsb.hotel.models.*;
+import pl.wsb.hotel.exceptions.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -56,7 +57,22 @@ class HotelServiceTest {
         assertEquals(2, numberOfClients, "There should be two clients in the hotel");
     }
 
+    @Test
+    void shouldReturnCorrectFullNameForExistingClient() throws ClientNotFoundException {
+        // when
+        String fullName = service.getClientFullName(validClientId);
 
+        // then
+        assertEquals("TestFirstName TestLastName", fullName, "Full name should match the expected value");
+    }
+
+    @Test
+    void shouldThrowClientNotFoundExceptionForNonExistentClient() {
+        // when & then
+        assertThrows(ClientNotFoundException.class, () -> {
+            service.getClientFullName("NotExistentId");
+        }, "Should throw ClientNotFoundException for a non-existent client ID");
+    }
 
 
 }
