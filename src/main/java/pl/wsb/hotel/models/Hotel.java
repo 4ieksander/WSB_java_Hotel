@@ -1,6 +1,6 @@
 package pl.wsb.hotel.models;
 
-import pl.wsb.hotel.service.SpecialService;
+import pl.wsb.hotel.services.SpecialService;
 import java.util.*;
 
 public class Hotel {

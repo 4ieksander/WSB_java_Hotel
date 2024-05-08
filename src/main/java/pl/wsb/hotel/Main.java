@@ -1,6 +1,6 @@
 package pl.wsb.hotel;
 import pl.wsb.hotel.models.*;
-import pl.wsb.hotel.service.HotelService;
+import pl.wsb.hotel.services.HotelService;
 import pl.wsb.hotel.models.PremiumClient;
 import pl.wsb.hotel.models.PremiumClient.PremiumAccountType;
 import java.time.LocalDate;

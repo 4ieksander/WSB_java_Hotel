@@ -1,4 +1,4 @@
-package pl.wsb.hotel.service;
+package pl.wsb.hotel.services;
 
 public abstract class SpecialService {
     private String name;

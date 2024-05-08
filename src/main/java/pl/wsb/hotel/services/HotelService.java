@@ -1,4 +1,4 @@
-package pl.wsb.hotel.service;
+package pl.wsb.hotel.services;
 
 import pl.wsb.hotel.interfaces.HotelCapability;
 import pl.wsb.hotel.models.Hotel;
@@ -11,50 +11,18 @@ import java.util.OptionalInt;
 
 
 public class HotelService implements HotelCapability{
-    private Hotel hotel;
+    private final Hotel hotel;
 
     public HotelService(Hotel hotel) {
         this.hotel = hotel;
     }
 
 
+
     // Public methods
-
-    // Methods to adding objects to collections
-    public void addSpecialService(SpecialService service) {
-        this.hotel.getSpecialServices().add(service);
-    }
-
-    public void addRoom(Integer roomNumber, Room room) {
-        this.hotel.getRooms().put(roomNumber, room);
-    }
-
-    public void addRoom(Room room) {
-        Integer roomNumber = findFirstAvailableRoomNumber();
-        this.hotel.getRooms().put(roomNumber, room);
-    }
-
+    // Client
     public void addClient(Client client) {
         this.hotel.getClients().add(client);
-    }
-
-    public void addReservation(String reservationId, RoomReservation reservation) {
-        this.hotel.getReservations().put(reservationId, reservation);
-    }
-
-
-    // Methods to returning object from collections
-    public SpecialService getSpecialServiceByName(String serviceName) {
-        for (SpecialService service : this.hotel.getSpecialServices()) {
-            if (service.getName().equals(serviceName)) {
-                return service;
-            }
-        }
-        return null; // Zwraca null, jeśli nie znajdzie usługi
-    }
-
-    public Room getRoomByNumber(int roomNumber) {
-        return this.hotel.getRooms().get(roomNumber);
     }
 
     public Client getClientById(String clientId) {
@@ -66,9 +34,51 @@ public class HotelService implements HotelCapability{
         return null;
     }
 
+
+
+    // Room
+    public void addRoom(Integer roomNumber, Room room) {
+        this.hotel.getRooms().put(roomNumber, room);
+    }
+
+    public void addRoom(Room room) {
+        Integer roomNumber = findFirstAvailableRoomNumber();
+        this.hotel.getRooms().put(roomNumber, room);
+    }
+
+    public Room getRoomByNumber(int roomNumber) {
+        return this.hotel.getRooms().get(roomNumber);
+    }
+
+
+
+    // Reservations
+    public void addReservation(String reservationId, RoomReservation reservation) {
+        this.hotel.getReservations().put(reservationId, reservation);
+    }
+
     public RoomReservation getReservationById(String reservationId) {
         return this.hotel.getReservations().get(reservationId);
     }
+
+
+
+    // Unnecessary
+    // Methods to returning object from collections
+    public SpecialService getSpecialServiceByName(String serviceName) {
+        for (SpecialService service : this.hotel.getSpecialServices()) {
+            if (service.getName().equals(serviceName)) {
+                return service;
+            }
+        }
+        return null; // Zwraca null, jeśli nie znajdzie usługi
+    }
+
+    // Methods to adding objects to collections
+    public void addSpecialService(SpecialService service) {
+        this.hotel.getSpecialServices().add(service);
+    }
+
 
 
     // Internal methods
