@@ -77,9 +77,19 @@ public class HotelService implements HotelCapability{
                 return room.getArea();
             }
         }
-        throw new RoomNotFoundException("Room not found with ID: " + roomId);
+        throw new RoomNotFoundException("room not found");
     }
 
+    @Override
+    public int getNumberOfRoomsWithKingSizeBed(int floor) {
+        int counter = 0;
+        for (Room room : this.hotel.getRooms().values()) {
+            if (room.getFloor() == floor && room.isHasKingSizeBed()) {
+                counter++;
+            }
+        }
+        return counter;
+    }
     public Client getClientById(String clientId) {
         for (Client client : this.hotel.getClients()) {
             if (client.getId().equals(clientId)) {

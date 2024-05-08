@@ -72,6 +72,7 @@ public class Main {
             } catch (RoomNotFoundException e) {
                 throw new RuntimeException(e);
             }
+            out.println(hotelService.getNumberOfRoomsWithKingSizeBed(1));
 
             hotelService.addReservation("Rezerwacja1", reservation);
             hotelService.addRoom(room);
