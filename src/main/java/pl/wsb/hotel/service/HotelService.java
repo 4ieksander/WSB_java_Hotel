@@ -1,10 +1,9 @@
 package pl.wsb.hotel.service;
 
-import pl.wsb.hotel.model.Hotel;
-import pl.wsb.hotel.model.Client;
-import pl.wsb.hotel.model.Room;
-import pl.wsb.hotel.model.RoomReservation;
-import pl.wsb.hotel.service.SpecialService;
+import pl.wsb.hotel.models.Hotel;
+import pl.wsb.hotel.models.Client;
+import pl.wsb.hotel.models.Room;
+import pl.wsb.hotel.models.RoomReservation;
 
 import java.util.Map;
 import java.util.OptionalInt;

@@ -1,4 +1,4 @@
-package pl.wsb.hotel.model;
+package pl.wsb.hotel.models;
 
 
 public class LuggageService extends SpecialService {

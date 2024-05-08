@@ -1,4 +1,4 @@
-package pl.wsb.hotel.exceptions;
+package pl.wsb.hotel.interfaces;
 
 import pl.wsb.hotel.exceptions.ClientNotFoundException;
 import pl.wsb.hotel.exceptions.ReservationNotFoundException;

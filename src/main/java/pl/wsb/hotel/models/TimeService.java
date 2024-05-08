@@ -1,4 +1,4 @@
-package pl.wsb.hotel.model;
+package pl.wsb.hotel.models;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 

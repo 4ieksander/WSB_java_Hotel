@@ -1,13 +1,11 @@
 package pl.wsb.hotel;
-import pl.wsb.hotel.model.*;
+import pl.wsb.hotel.models.*;
 import pl.wsb.hotel.service.HotelService;
-import pl.wsb.hotel.service.SpecialService;
-import pl.wsb.hotel.model.PremiumClient;
-import pl.wsb.hotel.model.PremiumClient.PremiumAccountType;
+import pl.wsb.hotel.models.PremiumClient;
+import pl.wsb.hotel.models.PremiumClient.PremiumAccountType;
 import java.time.LocalDate;
-import pl.wsb.hotel.model.TimeService;
-import pl.wsb.hotel.model.LuggageService;
-import java.util.*;
+import pl.wsb.hotel.models.TimeService;
+import pl.wsb.hotel.models.LuggageService;
 
 import static java.lang.System.out;
 

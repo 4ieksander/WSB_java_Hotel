@@ -1,4 +1,4 @@
-package pl.wsb.hotel.model;
+package pl.wsb.hotel.models;
 
 import pl.wsb.hotel.service.SpecialService;
 import java.util.*;
