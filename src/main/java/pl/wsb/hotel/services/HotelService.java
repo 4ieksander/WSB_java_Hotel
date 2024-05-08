@@ -1,5 +1,9 @@
 package pl.wsb.hotel.services;
 
+import pl.wsb.hotel.exceptions.ClientNotFoundException;
+import pl.wsb.hotel.exceptions.ReservationNotFoundException;
+import pl.wsb.hotel.exceptions.RoomNotFoundException;
+import pl.wsb.hotel.exceptions.RoomReservedException;
 import pl.wsb.hotel.interfaces.HotelCapability;
 import pl.wsb.hotel.models.Hotel;
 import pl.wsb.hotel.models.Client;
@@ -35,6 +39,15 @@ public class HotelService implements HotelCapability{
         Client newClient = new Client(clientId, birthDate, firstName, lastName,null, null, null);
         this.hotel.getClients().add(newClient);
         return clientId;
+    }
+    @Override
+    public String getClientFullName(String clientId) throws ClientNotFoundException {
+        for (Client client : this.hotel.getClients()) {
+            if (client.getId().equals(clientId)) {
+                return client.getFullName();
+            }
+        }
+        throw  new ClientNotFoundException(clientId);
     }
 
     public Client getClientById(String clientId) {

@@ -1,4 +1,5 @@
 package pl.wsb.hotel;
+import pl.wsb.hotel.exceptions.ClientNotFoundException;
 import pl.wsb.hotel.models.*;
 import pl.wsb.hotel.services.HotelService;
 import pl.wsb.hotel.models.PremiumClient;
@@ -52,8 +53,12 @@ public class Main {
             Hotel hotel = new Hotel("Hotel Testowy");
             HotelService hotelService = new HotelService(hotel);
 //            public String addClient(String firstName, String lastName, LocalDate.of(2000, 4, 5){
-            out.println(hotelService.addClient("firstName", "lastName", LocalDate.of(2000, 4, 5)));
-            out.println("-------------------------------------");
+            String id_klienta = hotelService.addClient("testownikimie", "testowniknazwisko", LocalDate.of(2000, 4, 5));
+            try {
+                out.println(hotelService.getClientFullName(id_klienta));
+            } catch (ClientNotFoundException e) {
+                throw new RuntimeException(e);
+            }
             hotelService.addReservation("Rezerwacja1", reservation);
             hotelService.addRoom(room);
 
