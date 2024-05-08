@@ -4,6 +4,8 @@ import pl.wsb.hotel.services.HotelService;
 import pl.wsb.hotel.models.PremiumClient;
 import pl.wsb.hotel.models.PremiumClient.PremiumAccountType;
 import java.time.LocalDate;
+import java.util.Date;
+
 import pl.wsb.hotel.models.TimeService;
 import pl.wsb.hotel.models.LuggageService;
 
@@ -49,7 +51,9 @@ public class Main {
 
             Hotel hotel = new Hotel("Hotel Testowy");
             HotelService hotelService = new HotelService(hotel);
-            hotelService.addClient(client);
+//            public String addClient(String firstName, String lastName, LocalDate.of(2000, 4, 5){
+            out.println(hotelService.addClient("firstName", "lastName", LocalDate.of(2000, 4, 5)));
+            out.println("-------------------------------------");
             hotelService.addReservation("Rezerwacja1", reservation);
             hotelService.addRoom(room);
 

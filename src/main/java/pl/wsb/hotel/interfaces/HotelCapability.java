@@ -11,7 +11,7 @@ import java.util.Collection;
 public interface HotelCapability {
 
 //    // clients //
-//    String addClient(String firstName, String lastName, LocalDate birthDate);
+        String addClient(String firstName, String lastName, LocalDate birthDate);
 //    String getClientFullName(String clientId);
 //    int getNumberOfUnderageClients();
 //

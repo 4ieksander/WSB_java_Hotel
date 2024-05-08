@@ -6,9 +6,14 @@ import pl.wsb.hotel.models.Client;
 import pl.wsb.hotel.models.Room;
 import pl.wsb.hotel.models.RoomReservation;
 
+import java.time.LocalDate;
 import java.util.Map;
 import java.util.OptionalInt;
-
+import java.util.UUID;
+import java.time.Period;
+import java.time.LocalDate;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class HotelService implements HotelCapability{
     private final Hotel hotel;
@@ -18,11 +23,18 @@ public class HotelService implements HotelCapability{
     }
 
 
-
     // Public methods
     // Client
-    public void addClient(Client client) {
+    public String addClient(Client client) {
         this.hotel.getClients().add(client);
+        return client.getId();
+    }
+    @Override
+    public String addClient(String firstName, String lastName, LocalDate birthDate){
+        String clientId = UUID.randomUUID().toString();
+        Client newClient = new Client(clientId, birthDate, firstName, lastName,null, null, null);
+        this.hotel.getClients().add(newClient);
+        return clientId;
     }
 
     public Client getClientById(String clientId) {
