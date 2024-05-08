@@ -17,7 +17,7 @@ public interface HotelCapability {
 //
 //    // rooms //
         String addRoom(double area, int floor, boolean hasKingSizeBed, String description);
-//    double getRoomArea(String roomId);
+        double getRoomArea(String roomId) throws RoomNotFoundException; //dodane throws
 //    int getNumberOfRoomsWithKingSizeBed(int floor);
 //
 //    // reservations //

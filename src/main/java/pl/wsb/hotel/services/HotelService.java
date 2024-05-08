@@ -59,12 +59,25 @@ public class HotelService implements HotelCapability{
         }
         return count;
     }
+
+
+    ///////////////////////////////////////////
+    //rooms///
     @Override
     public String addRoom(double area, int floor, boolean hasKingSizeBed, String description){
         String roomId = UUID.randomUUID().toString();
         Room newRoom = new Room(roomId, null, area, floor,hasKingSizeBed,0,false,0);
         this.hotel.getRooms().put(this.findFirstAvailableRoomNumber(), newRoom);
         return roomId;
+    }
+    @Override
+    public double getRoomArea(String roomId) throws RoomNotFoundException {
+        for (Room room : this.hotel.getRooms().values()) {
+            if (room.getId().equals(roomId)) {
+                return room.getArea();
+            }
+        }
+        throw new RoomNotFoundException("Room not found with ID: " + roomId);
     }
 
     public Client getClientById(String clientId) {

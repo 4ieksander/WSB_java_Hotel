@@ -1,5 +1,6 @@
 package pl.wsb.hotel;
 import pl.wsb.hotel.exceptions.ClientNotFoundException;
+import pl.wsb.hotel.exceptions.RoomNotFoundException;
 import pl.wsb.hotel.models.*;
 import pl.wsb.hotel.services.HotelService;
 import pl.wsb.hotel.models.PremiumClient;
@@ -62,9 +63,15 @@ public class Main {
             }
             out.println(hotelService.getNumberOfUnderageClients());
 
-            String id_pokoju = hotelService.addRoom(3,2,true,"pokój z balkonem :)");
+            String id_pokoju = hotelService.addRoom(300,2,true,"pokój z balkonem :)");
 
             out.println("id pokoju: " + id_pokoju);
+
+            try {
+                out.println(hotelService.getRoomArea(id_pokoju));
+            } catch (RoomNotFoundException e) {
+                throw new RuntimeException(e);
+            }
 
             hotelService.addReservation("Rezerwacja1", reservation);
             hotelService.addRoom(room);
