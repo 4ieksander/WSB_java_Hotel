@@ -13,7 +13,7 @@ public interface HotelCapability {
 //    // clients //
         String addClient(String firstName, String lastName, LocalDate birthDate);
         String getClientFullName(String clientId) throws ClientNotFoundException; //dodane throws KONSULTACJE
-//    int getNumberOfUnderageClients();
+        int getNumberOfUnderageClients();
 //
 //    // rooms //
 //    String addRoom(double area, int floor, boolean hasKingSizeBed, String description);

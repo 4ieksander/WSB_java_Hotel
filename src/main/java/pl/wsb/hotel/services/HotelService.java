@@ -49,6 +49,16 @@ public class HotelService implements HotelCapability{
         }
         throw  new ClientNotFoundException(clientId);
     }
+    @Override
+    public int getNumberOfUnderageClients() {
+        int count = 0;
+        for (Client client : this.hotel.getClients()) {
+            if (client.getAge() < 18) {
+                count++;
+            }
+        }
+        return count;
+    }
 
     public Client getClientById(String clientId) {
         for (Client client : this.hotel.getClients()) {
