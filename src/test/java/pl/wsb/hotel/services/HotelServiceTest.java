@@ -1,24 +1,37 @@
 package pl.wsb.hotel.services;
 
 import pl.wsb.hotel.models.*;
+import pl.wsb.hotel.exceptions.*;
 
 import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 
 
 class HotelServiceTest {
-    private final HotelService service = new HotelService(new Hotel("HotelTest"));
+    private HotelService service;
+    private String validClientId;
+    private String validClientFirstName;
+    private String validClientLastName;
+    private LocalDate validClientDateOfBirth;
+
+
+    @BeforeEach     // Przed każdym testem tworzy nową instancję
+    void setUp() {
+        service = new HotelService(new Hotel("HotelTest"));
+        validClientFirstName = "TestFirstName";
+        validClientLastName = "TestLastName";
+        validClientDateOfBirth = LocalDate.of(1990, 1, 1);
+        validClientId = service.addClient(validClientFirstName,validClientLastName,validClientDateOfBirth);
+    }
 
     @Test
     void shouldAddClientSuccessfully() {
-        // given
-        String firstName = "Jan";
-        String lastName = "Nowak";
-        LocalDate birthDate = LocalDate.of(1990, 1, 1);
+        // given in @BeforeEach
 
         // when
-        String clientId = service.addClient(firstName, lastName, birthDate);
+        String clientId = validClientId;
 
         // then
         Client addedClient = service.hotel.getClients().stream()
@@ -27,15 +40,14 @@ class HotelServiceTest {
                 .orElse(null);
 
         assertNotNull(addedClient, "Client should be added");
-        assertEquals(firstName, addedClient.getFirstName(), "First name should match");
-        assertEquals(lastName, addedClient.getLastName(), "Last name should match");
-        assertEquals(birthDate, addedClient.getBirthDate(), "Birth date should match");
+        assertEquals(validClientFirstName, addedClient.getFirstName(), "First name should match");
+        assertEquals(validClientLastName, addedClient.getLastName(), "Last name should match");
+        assertEquals(validClientDateOfBirth, addedClient.getBirthDate(), "Birth date should match");
     }
 
     @Test
     void shouldHandleMultipleClients() {
         // given
-        service.addClient("Jan", "Nowak", LocalDate.of(1990, 1, 1));
         service.addClient("Anna", "Kowalska", LocalDate.of(1992, 2, 2));
 
         // when
@@ -44,4 +56,23 @@ class HotelServiceTest {
         // then
         assertEquals(2, numberOfClients, "There should be two clients in the hotel");
     }
+
+    @Test
+    void shouldReturnCorrectFullNameForExistingClient() throws ClientNotFoundException {
+        // when
+        String fullName = service.getClientFullName(validClientId);
+
+        // then
+        assertEquals("TestFirstName TestLastName", fullName, "Full name should match the expected value");
+    }
+
+    @Test
+    void shouldThrowClientNotFoundExceptionForNonExistentClient() {
+        // when & then
+        assertThrows(ClientNotFoundException.class, () -> {
+            service.getClientFullName("NotExistentId");
+        }, "Should throw ClientNotFoundException for a non-existent client ID");
+    }
+
+
 }
