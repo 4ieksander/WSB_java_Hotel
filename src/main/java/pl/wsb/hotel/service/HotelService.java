@@ -1,5 +1,6 @@
 package pl.wsb.hotel.service;
 
+import pl.wsb.hotel.interfaces.HotelCapability;
 import pl.wsb.hotel.models.Hotel;
 import pl.wsb.hotel.models.Client;
 import pl.wsb.hotel.models.Room;
@@ -9,7 +10,7 @@ import java.util.Map;
 import java.util.OptionalInt;
 
 
-public class HotelService {
+public class HotelService implements HotelCapability{
     private Hotel hotel;
 
     public HotelService(Hotel hotel) {
