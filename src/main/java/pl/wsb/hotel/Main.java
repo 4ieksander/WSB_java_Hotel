@@ -53,12 +53,13 @@ public class Main {
             Hotel hotel = new Hotel("Hotel Testowy");
             HotelService hotelService = new HotelService(hotel);
 //            public String addClient(String firstName, String lastName, LocalDate.of(2000, 4, 5){
-            String id_klienta = hotelService.addClient("testownikimie", "testowniknazwisko", LocalDate.of(2000, 4, 5));
+            String id_klienta = hotelService.addClient("testownikimie", "testowniknazwisko", LocalDate.of(2010, 4, 5));
             try {
                 out.println(hotelService.getClientFullName(id_klienta));
             } catch (ClientNotFoundException e) {
                 throw new RuntimeException(e);
             }
+            out.println(hotelService.getNumberOfUnderageClients());
             hotelService.addReservation("Rezerwacja1", reservation);
             hotelService.addRoom(room);
 
