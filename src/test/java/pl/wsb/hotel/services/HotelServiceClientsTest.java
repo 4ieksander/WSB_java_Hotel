@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 
 
-class HotelServiceTest {
+class HotelServiceClientsTest {
     private HotelService service;
     private String validClientId;
     private String validClientFirstName;

@@ -147,7 +147,7 @@ public class HotelService implements HotelCapability{
 
 
     // Internal methods
-    private Integer findFirstAvailableRoomNumber() {
+    protected Integer findFirstAvailableRoomNumber() {
         Map<Integer, Room> rooms = this.hotel.getRooms();
         if (rooms.isEmpty()) {
             return 1;
