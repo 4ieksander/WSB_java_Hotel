@@ -1,0 +1,15 @@
+/target/classes/pl/wsb/hotel/models/Client.class
+/target/classes/pl/wsb/hotel/models/Hotel.class
+/target/classes/pl/wsb/hotel/interfaces/HotelCapability.class
+/target/classes/pl/wsb/hotel/services/HotelService.class
+/target/test-classes/pl/wsb/hotel/services/HotelServiceTest.class
+/target/classes/pl/wsb/hotel/models/LuggageService.class
+/target/classes/pl/wsb/hotel/services/LuggageService.class
+/target/classes/pl/wsb/hotel/models/PremiumClient$PremiumAccountType.class
+/target/classes/pl/wsb/hotel/models/PremiumClient.class
+/target/classes/pl/wsb/hotel/models/Room.class
+/target/classes/pl/wsb/hotel/models/RoomReservation.class
+/target/classes/pl/wsb/hotel/models/SpecialService.class
+/target/classes/pl/wsb/hotel/services/SpecialService.class
+/target/classes/pl/wsb/hotel/models/TimeService.class
+/target/classes/pl/wsb/hotel/services/TimeService.class
