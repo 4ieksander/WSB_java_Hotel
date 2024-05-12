@@ -21,17 +21,14 @@ public interface HotelCapability {
         int getNumberOfRoomsWithKingSizeBed(int floor);
 //
 //    // reservations //
-    String addNewReservation(String clientId, String roomId, LocalDate date) throws ClientNotFoundException, RoomNotFoundException; //dodane throws
-//        throws ClientNotFoundException, RoomNotFoundException, RoomReservedException;
+    String addNewReservation(String clientId, String roomId, LocalDate date) throws ClientNotFoundException, RoomNotFoundException, RoomReservedException; //dodane throws
 //
-//    String confirmReservation(String reservationId)
-//        throws ReservationNotFoundException;
+    String confirmReservation(String reservationId) throws ReservationNotFoundException;
 //
-//    boolean isRoomReserved(String roomId, LocalDate date)
-//        throws RoomNotFoundException;
+    boolean isRoomReserved(String roomId, LocalDate date) throws RoomNotFoundException;
 //
-//    int getNumberOfUnconfirmedReservation(LocalDate date);
+    int getNumberOfUnconfirmedReservation(LocalDate date);
 //
-//    Collection<String> getRoomIdsReservedByClient(String clientId)
+   Collection<String> getRoomIdsReservedByClient(String clientId) throws ClientNotFoundException; //dodane throws
 }
 

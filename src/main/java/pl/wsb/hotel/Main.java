@@ -1,11 +1,14 @@
 package pl.wsb.hotel;
 import pl.wsb.hotel.exceptions.ClientNotFoundException;
 import pl.wsb.hotel.exceptions.RoomNotFoundException;
+import pl.wsb.hotel.exceptions.RoomReservedException;
+import pl.wsb.hotel.exceptions.ReservationNotFoundException;
 import pl.wsb.hotel.models.*;
 import pl.wsb.hotel.services.HotelService;
 import pl.wsb.hotel.models.PremiumClient;
 import pl.wsb.hotel.models.PremiumClient.PremiumAccountType;
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.Date;
 
 import pl.wsb.hotel.models.TimeService;
@@ -67,6 +70,7 @@ public class Main {
 
             out.println("id pokoju: " + id_pokoju);
 
+
             try {
                 out.println(hotelService.getRoomArea(id_pokoju));
             } catch (RoomNotFoundException e) {
@@ -80,7 +84,42 @@ public class Main {
             out.println(hotelService);
             out.println(hotel.getRooms());
 
+            //ALEKSANDER TEST THIS PLIS
+            String reservationId = null;
+            try {
+                reservationId = hotelService.addNewReservation(id_klienta, id_pokoju, LocalDate.now());
+                System.out.println( reservationId + " dodana");
+            } catch (ClientNotFoundException | RoomNotFoundException | RoomReservedException e) {
+                System.err.println("rezerwcaja nie dodana " + e.getMessage());
+            }
+
+            //to też
+            try {
+                String confirmedReservationId = hotelService.confirmReservation(reservationId);
+                System.out.println("rezerwacja potwierdzona " + confirmedReservationId);
+            } catch (ReservationNotFoundException e) {
+                System.err.println("rezerwacja nieudana " + e.getMessage());
+            }
+
+            LocalDate reservationDate = LocalDate.now();
+            try {
+                boolean isReserved = hotelService.isRoomReserved(id_pokoju, reservationDate);
+                System.out.println("pokoj " + id_pokoju + " zarezerwowany " + reservationDate + ": " + isReserved);
+            } catch (RoomNotFoundException | RoomReservedException e) {
+                System.err.println("blad " + e.getMessage());
+            }
+
+            int unconfirmedReservations = hotelService.getNumberOfUnconfirmedReservation(LocalDate.now());
+            System.out.println("niepotwierdzone rezerwacje: " + unconfirmedReservations);
+
+            try {
+                Collection<String> reservedRooms = hotelService.getRoomIdsReservedByClient(id_klienta);
+                System.out.println("klient: " + id_klienta + " zarezerował takie pokoje:  " + reservedRooms);
+            } catch (ClientNotFoundException e) {
+                System.err.println("blad: " + e.getMessage());
+            }
         }
+
     }
 
 

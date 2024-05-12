@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 
 public class HotelService implements HotelCapability{
     final Hotel hotel;
+    private Map<String, Integer> roomIdToKeyMap = new HashMap<>();
 
     public HotelService(Hotel hotel) {
         this.hotel = hotel;
@@ -97,9 +98,73 @@ public class HotelService implements HotelCapability{
     }
 
 
-
     // reservations ///
     //////////////////
+
+    @Override
+    public String addNewReservation(String clientId, String roomId, LocalDate date) throws ClientNotFoundException, RoomNotFoundException, RoomReservedException {
+        Client client = this.hotel.getClients().stream()
+                .filter(c -> c.getId().equals(clientId))
+                .findFirst()
+                .orElse(null);
+        if (client == null) {
+            throw new ClientNotFoundException("client id not found: " + clientId);
+        }
+
+        Room room = this.hotel.getRooms().get(roomId); //tutaj jest error
+        if (room == null) {
+            throw new RoomNotFoundException("room id not found: " + roomId);
+        }
+        for (RoomReservation reservation : this.hotel.getReservations().values()) {
+            if (reservation.getRoom().getId().equals(roomId) && reservation.getDate().equals(date)) {
+                throw new RoomReservedException(roomId, date);
+            }
+        }
+        String reservationId = UUID.randomUUID().toString();
+        RoomReservation newReservation = new RoomReservation(date, client, room);
+        this.hotel.getReservations().put(reservationId, newReservation);
+        return reservationId;
+    }
+
+    @Override
+    public String confirmReservation(String reservationId) throws ReservationNotFoundException{
+        RoomReservation reservation = this.hotel.getReservations().get(reservationId);
+        if (reservation == null) {
+            throw new ReservationNotFoundException("reservation not found " + reservationId);
+        }
+        reservation.confirmReservation();
+        return reservationId;
+    }
+
+    @Override
+    public boolean isRoomReserved(String roomId, LocalDate date) throws RoomNotFoundException {
+        Room room = this.hotel.getRooms().get(roomId);
+        if (room == null) {
+            throw new RoomNotFoundException("room not found with id: " + roomId);
+        }
+        return this.hotel.getReservations().values().stream()
+                .anyMatch(reservation -> reservation.getRoom().getId().equals(roomId) && reservation.getDate().equals(date));
+    }
+
+    @Override
+    public int getNumberOfUnconfirmedReservation(LocalDate date) {
+        return (int) this.hotel.getReservations().values().stream()
+                .filter(reservation -> !reservation.isConfirmed() && reservation.getDate().equals(date))
+                .count();
+    }
+
+    @Override
+    public Collection<String> getRoomIdsReservedByClient(String clientId) throws ClientNotFoundException {
+        if (this.hotel.getClients().stream().noneMatch(client -> client.getId().equals(clientId))) {
+            throw new ClientNotFoundException("client not found " + clientId);
+        }
+
+        return this.hotel.getReservations().values().stream()
+                .filter(reservation -> reservation.getClient().getId().equals(clientId))
+                .map(reservation -> reservation.getRoom().getId())
+                .collect(Collectors.toSet());
+    }
+
 
     public Client getClientById(String clientId) {
         for (Client client : this.hotel.getClients()) {
