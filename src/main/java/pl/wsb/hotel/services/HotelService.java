@@ -73,7 +73,7 @@ public class HotelService implements HotelCapability{
     public String addRoom(double area, int floor, boolean hasKingSizeBed, String description){
         String roomId = UUID.randomUUID().toString();
         Room newRoom = new Room(roomId, null, area, floor,hasKingSizeBed,0,false,0);
-        this.hotel.getRooms().put(this.findFirstAvailableRoomNumber(), newRoom);
+        this.hotel.getRooms().put(roomId, newRoom);
         return roomId;
     }
     @Override
@@ -178,18 +178,19 @@ public class HotelService implements HotelCapability{
 
 
     // Room
-    public void addRoom(Integer roomNumber, Room room) {
-        this.hotel.getRooms().put(roomNumber, room);
-    }
+    //public void addRoom(String roomNumber, Room room) {
+   //this.hotel.getRooms().put(roomNumber, room);
+   // }
 
-    public void addRoom(Room room) {
-        Integer roomNumber = findFirstAvailableRoomNumber();
-        this.hotel.getRooms().put(roomNumber, room);
-    }
+   // public void addRoom(Room room) {
+     //   Integer roomNumber = findFirstAvailableRoomNumber();
+   // }
+      //this.hotel.getRooms().put(roomNumber, room);
+   //}
 
-    public Room getRoomByNumber(int roomNumber) {
-        return this.hotel.getRooms().get(roomNumber);
-    }
+   //public Room getRoomByNumber(int roomNumber) {
+    //    return this.hotel.getRooms().get(roomNumber);
+   //}
 
 
 
@@ -222,19 +223,22 @@ public class HotelService implements HotelCapability{
 
 
 
-    // Internal methods
-    protected Integer findFirstAvailableRoomNumber() {
-        Map<Integer, Room> rooms = this.hotel.getRooms();
-        if (rooms.isEmpty()) {
-            return 1;
-        }
+// Internal methods
+ protected Integer findFirstAvailableRoomNumber() {
+    Map<String, Room> rooms = this.hotel.getRooms();
+   if (rooms.isEmpty()) {
+       return 1;
+  }
 
-        OptionalInt highestRoomNumber = rooms.keySet().stream().mapToInt(Integer::intValue).max();
-        for (int i = 1; i <= highestRoomNumber.getAsInt() + 1; i++) {
-            if (!rooms.containsKey(i)) {
-                return i;
-            }
-        }
-        return highestRoomNumber.getAsInt() + 1;
-    }
+     OptionalInt highestRoomNumber = rooms.keySet()
+             .stream()
+             .mapToInt(Integer::parseInt)
+             .max();
+  for (int i = 1; i <= highestRoomNumber.getAsInt() + 1; i++) {
+     if (!rooms.containsKey(i)) {
+         return i;
+     }
+   }
+ return highestRoomNumber.getAsInt() + 1;
+ }
 }

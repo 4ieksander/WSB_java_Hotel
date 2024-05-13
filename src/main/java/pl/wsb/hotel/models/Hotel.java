@@ -6,26 +6,26 @@ import java.util.*;
 public class Hotel {
     private String name;
     private Set<SpecialService> specialServices = new HashSet<>();
-    private Map<Integer, Room> rooms = new HashMap<>();
+    private Map<String, Room> rooms = new HashMap<>();
     private List<Client> clients = new ArrayList<>();
     private Map<String, RoomReservation> reservations = new HashMap<>();
 
 
     // Constructors
-    public Hotel(String name, Set<SpecialService> specialServices, Map<Integer, Room> rooms, List<Client> clients) {
+    public Hotel(String name, Set<SpecialService> specialServices, Map<String, Room> rooms, List<Client> clients) {
         this.name = name;
         this.clients = clients;
         this.specialServices = specialServices;
         this.rooms = rooms;
     }
 
-    public Hotel(String name, Set<SpecialService> specialServices, Map<Integer, Room> rooms) {
+    public Hotel(String name, Set<SpecialService> specialServices, Map<String, Room> rooms) {
         this.name = name;
         this.specialServices = specialServices;
         this.rooms = rooms;
     }
 
-    public Hotel(String name, Map<Integer, Room> rooms) {
+    public Hotel(String name, Map<String, Room> rooms) {
         this.name = name;
         this.rooms = rooms;
     }
@@ -52,11 +52,11 @@ public class Hotel {
         this.specialServices = specialServices;
     }
 
-    public Map<Integer, Room> getRooms() {
+    public Map<String, Room> getRooms() {
         return rooms;
     }
 
-    public void setRooms(Map<Integer, Room> rooms) {
+    public void setRooms(Map<String, Room> rooms) {
         this.rooms = rooms;
     }
 

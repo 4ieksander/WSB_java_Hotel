@@ -57,7 +57,7 @@ public class Main {
             Hotel hotel = new Hotel("Hotel Testowy");
             HotelService hotelService = new HotelService(hotel);
 //            public String addClient(String firstName, String lastName, LocalDate.of(2000, 4, 5){
-            String id_klienta = hotelService.addClient("testownikimie", "testowniknazwisko", LocalDate.of(2010, 4, 5));
+            String id_klienta = hotelService.addClient("losoweimie_task3", "losowenazwisko_task3", LocalDate.of(2010, 4, 5));
             out.println("id klienta: " + id_klienta);
             try {
                 out.println(hotelService.getClientFullName(id_klienta));
@@ -78,22 +78,22 @@ public class Main {
             }
             out.println(hotelService.getNumberOfRoomsWithKingSizeBed(1));
 
-            hotelService.addReservation("Rezerwacja1", reservation);
-            hotelService.addRoom(room);
+            //hotelService.addReservation("Rezerwacja1", reservation);
+            //hotelService.addRoom(room);
 
             out.println(hotelService);
             out.println(hotel.getRooms());
 
-            //ALEKSANDER TEST THIS PLIS
+
             String reservationId = null;
             try {
                 reservationId = hotelService.addNewReservation(id_klienta, id_pokoju, LocalDate.now());
-                System.out.println( reservationId + " dodana");
+                System.out.println( "rezerwacja o id: " + reservationId + " dodana");
             } catch (ClientNotFoundException | RoomNotFoundException | RoomReservedException e) {
                 System.err.println("rezerwcaja nie dodana " + e.getMessage());
             }
 
-            //to też
+
             try {
                 String confirmedReservationId = hotelService.confirmReservation(reservationId);
                 System.out.println("rezerwacja potwierdzona " + confirmedReservationId);
