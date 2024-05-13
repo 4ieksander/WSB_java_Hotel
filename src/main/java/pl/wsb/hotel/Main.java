@@ -9,10 +9,9 @@ import pl.wsb.hotel.models.PremiumClient;
 import pl.wsb.hotel.models.PremiumClient.PremiumAccountType;
 import java.time.LocalDate;
 import java.util.Collection;
-import java.util.Date;
 
-import pl.wsb.hotel.models.TimeService;
-import pl.wsb.hotel.models.LuggageService;
+import pl.wsb.hotel.services.TimeService;
+import pl.wsb.hotel.services.LuggageService;
 
 import static java.lang.System.out;
 

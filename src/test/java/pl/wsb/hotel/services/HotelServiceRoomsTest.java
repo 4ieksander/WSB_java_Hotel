@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class HotelServiceTest {
+class HotelServiceRoomsTest {
     private HotelService service;
 
     @BeforeEach
@@ -22,7 +22,7 @@ class HotelServiceTest {
 
         // then
         assertNotNull(roomId, "Room ID should not be null");
-        assertTrue(service.hotel.getRooms().containsKey(service.findFirstAvailableRoomNumber() - 1));
+        assertTrue(service.hotel.getRooms().containsKey(roomId));
     }
 
     @Test
@@ -48,15 +48,22 @@ class HotelServiceTest {
     @Test
     void shouldCountRoomsWithKingSizeBedOnSpecificFloor() {
         // given
-        service.addRoom(25.0, 3, true, "");
-        service.addRoom(18.0, 3, true, "");
-        service.addRoom(20.0, 3, false, "");
-        service.addRoom(22.0, 4, true, "");
+        service.addRoom(25.0, 3, true, " ");
+        service.addRoom(18.0, 3, true, " ");
+        service.addRoom(20.0, 3, false, " ");
+        service.addRoom(22.0, 4, true, " ");
 
         // when
         int count = service.getNumberOfRoomsWithKingSizeBed(3);
 
         // then
         assertEquals(2, count, "Should count rooms with king-size bed on floor 3 correctly");
+    }
+    @Test
+    void shouldThrowInvalidRoomDataExceptionWhenDescriptionIsEmptyString(){
+        // when & then
+        assertThrows(InvalidRoomDataException.class, () -> {
+            service.addRoom(25.0, 3, true, "");
+        }, "Should throw RoomNotFoundException for non-existent room");
     }
 }

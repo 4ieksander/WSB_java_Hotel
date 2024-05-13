@@ -4,6 +4,7 @@ import pl.wsb.hotel.exceptions.ClientNotFoundException;
 import pl.wsb.hotel.exceptions.ReservationNotFoundException;
 import pl.wsb.hotel.exceptions.RoomNotFoundException;
 import pl.wsb.hotel.exceptions.RoomReservedException;
+import pl.wsb.hotel.exceptions.InvalidRoomDataException;
 import pl.wsb.hotel.interfaces.HotelCapability;
 import pl.wsb.hotel.models.Hotel;
 import pl.wsb.hotel.models.Client;
@@ -70,12 +71,17 @@ public class HotelService implements HotelCapability{
     ///////////////////////////////////////////
     //rooms///
     @Override
-    public String addRoom(double area, int floor, boolean hasKingSizeBed, String description){
+    public String addRoom(double area, int floor, boolean hasKingSizeBed, String description) {
+        if (area <= 0 || floor < 0 || description == null || description.isEmpty()) {
+            throw new InvalidRoomDataException("Invalid room data provided.");
+        }
         String roomId = UUID.randomUUID().toString();
-        Room newRoom = new Room(roomId, null, area, floor,hasKingSizeBed,0,false,0);
+        Room newRoom = new Room(roomId, null, area, floor, hasKingSizeBed, 0, false, 0);
         this.hotel.getRooms().put(roomId, newRoom);
         return roomId;
     }
+
+
     @Override
     public double getRoomArea(String roomId) throws RoomNotFoundException {
         for (Room room : this.hotel.getRooms().values()) {
@@ -176,27 +182,15 @@ public class HotelService implements HotelCapability{
     }
 
 
-
-    // Room
-    //public void addRoom(String roomNumber, Room room) {
-   //this.hotel.getRooms().put(roomNumber, room);
-   // }
-
-   // public void addRoom(Room room) {
-     //   Integer roomNumber = findFirstAvailableRoomNumber();
-   // }
-      //this.hotel.getRooms().put(roomNumber, room);
-   //}
-
-   //public Room getRoomByNumber(int roomNumber) {
-    //    return this.hotel.getRooms().get(roomNumber);
-   //}
-
-
-
     // Reservations
     public void addReservation(String reservationId, RoomReservation reservation) {
         this.hotel.getReservations().put(reservationId, reservation);
+    }
+
+    public String addReservation(RoomReservation reservation) {
+        String reservationId = reservation.getDate().toString() + "-" + reservation.getClient().getFullName();
+        this.hotel.getReservations().put(reservationId, reservation);
+        return reservationId;
     }
 
     public RoomReservation getReservationById(String reservationId) {
@@ -205,40 +199,19 @@ public class HotelService implements HotelCapability{
 
 
 
-    // Unnecessary
-    // Methods to returning object from collections
-    public SpecialService getSpecialServiceByName(String serviceName) {
-        for (SpecialService service : this.hotel.getSpecialServices()) {
-            if (service.getName().equals(serviceName)) {
-                return service;
-            }
+// Unnecessary
+// Methods to returning object from collections
+public SpecialService getSpecialServiceByName(String serviceName) {
+    for (SpecialService service : this.hotel.getSpecialServices()) {
+        if (service.getName().equals(serviceName)) {
+            return service;
         }
-        return null; // Zwraca null, jeśli nie znajdzie usługi
     }
-
-    // Methods to adding objects to collections
-    public void addSpecialService(SpecialService service) {
-        this.hotel.getSpecialServices().add(service);
-    }
-
-
-
-// Internal methods
- protected Integer findFirstAvailableRoomNumber() {
-    Map<String, Room> rooms = this.hotel.getRooms();
-   if (rooms.isEmpty()) {
-       return 1;
-  }
-
-     OptionalInt highestRoomNumber = rooms.keySet()
-             .stream()
-             .mapToInt(Integer::parseInt)
-             .max();
-  for (int i = 1; i <= highestRoomNumber.getAsInt() + 1; i++) {
-     if (!rooms.containsKey(i)) {
-         return i;
-     }
-   }
- return highestRoomNumber.getAsInt() + 1;
- }
+    return null; // Zwraca null, jeśli nie znajdzie usługi
 }
+
+// Methods to adding objects to collections
+public void addSpecialService(SpecialService service) {
+    this.hotel.getSpecialServices().add(service);
+}}
+
