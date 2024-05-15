@@ -59,7 +59,7 @@ public class HotelService implements HotelCapability{
     // rooms //
     // 4
     @Override
-    public String addRoom(double area, int floor, boolean hasKingSizeBed, String description) {
+    public String addRoom(double area, int floor, boolean hasKingSizeBed, String description)  {
         if (area <= 0 || floor < 0 || description == null || description.isEmpty()) {
             throw new InvalidRoomDataException("Invalid room data provided.");
         }
