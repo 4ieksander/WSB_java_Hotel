@@ -1,8 +1,5 @@
 package pl.wsb.hotel.services;
 
-
-import pl.wsb.hotel.services.SpecialService;
-
 public class LuggageService extends SpecialService {
     public LuggageService(String name) {
         super(name);

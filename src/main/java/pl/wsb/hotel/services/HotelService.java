@@ -95,7 +95,7 @@ public class HotelService implements HotelCapability{
     // reservations //
     // 7
     @Override
-    public String addNewReservation(String clientId, String roomId, LocalDate date) {
+    public String addNewReservation(String clientId, String roomId, LocalDate date) throws ClientNotFoundException, RoomNotFoundException, RoomReservedException {
         Client client = this.hotel.getClients().stream()
                 .filter(c -> c.getId().equals(clientId))
                 .findFirst()
@@ -121,7 +121,7 @@ public class HotelService implements HotelCapability{
 
     // 8
     @Override
-    public String confirmReservation(String reservationId) {
+    public String confirmReservation(String reservationId) throws ReservationNotFoundException {
         RoomReservation reservation = this.hotel.getReservations().get(reservationId);
         if (reservation == null) {
             throw new ReservationNotFoundException("reservation not found " + reservationId);
@@ -132,7 +132,7 @@ public class HotelService implements HotelCapability{
 
     // 9
     @Override
-    public boolean isRoomReserved(String roomId, LocalDate date) {
+    public boolean isRoomReserved(String roomId, LocalDate date) throws RoomNotFoundException {
         Room room = this.hotel.getRooms().get(roomId);
         if (room == null) {
             throw new RoomNotFoundException("room not found with id: " + roomId);
@@ -151,7 +151,7 @@ public class HotelService implements HotelCapability{
 
     // 11
     @Override
-    public Collection<String> getRoomIdsReservedByClient(String clientId) {
+    public Collection<String> getRoomIdsReservedByClient(String clientId) throws ClientNotFoundException {
         if (this.hotel.getClients().stream().noneMatch(client -> client.getId().equals(clientId))) {
             throw new ClientNotFoundException("client not found " + clientId);
         }
@@ -160,6 +160,7 @@ public class HotelService implements HotelCapability{
                 .map(reservation -> reservation.getRoom().getId())
                 .collect(Collectors.toSet());
     }
+
 
     //////////////////////////////
     // Additional methods
