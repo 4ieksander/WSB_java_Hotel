@@ -7,9 +7,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
-import java.util.HashMap;
 
-class HotelServiceReservationsTest {
+class HotelServiceReservationsWorkTest {
     private HotelService service;
     private Client client;
     private Room room;
@@ -19,7 +18,7 @@ class HotelServiceReservationsTest {
 
     @BeforeEach
     void setUp() {
-        service = new HotelService(new Hotel("HotelTest", new HashMap<>()));
+        service = new HotelService(new Hotel("TestHotel"));
         client = new Client("1", LocalDate.of(1990, 1, 1), "Test", "Client", "test@example.com", "123456789", "Test Address");
         room = new Room("123", "test",321, 1, true, 1, true, 111);
         reservation = new RoomReservation(LocalDate.now(), client, room);
