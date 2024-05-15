@@ -22,4 +22,8 @@ public class TimeService extends SpecialService {
         LocalTime currentTime = LocalTime.now();
         return currentTime.getHour() >= 7 && currentTime.getHour() <= 10;
     }
+
+    public boolean highDemand(LocalTime time) {
+        return time.getHour() >= 7 && time.getHour() <= 10;
+    }
 }
