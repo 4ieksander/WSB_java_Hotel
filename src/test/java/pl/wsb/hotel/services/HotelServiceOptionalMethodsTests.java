@@ -8,13 +8,18 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 
-class HotelServiceReservationsWorkTest {
+class HotelServiceOptionalMethodsTests {
     private HotelService service;
+
+    private SpecialService specialService;
     private Client client;
-    private Room room;
-    private RoomReservation reservation;
-    private String roomId;
     private String clientId;
+
+    private Room room;
+    private String roomId;
+
+    private RoomReservation reservation;
+
 
     @BeforeEach
     void setUp() {
@@ -22,8 +27,28 @@ class HotelServiceReservationsWorkTest {
         client = new Client("1", LocalDate.of(1990, 1, 1), "Test", "Client", "test@example.com", "123456789", "Test Address");
         room = new Room("123", "test",321, 1, true, 1, true, 111);
         reservation = new RoomReservation(LocalDate.now(), client, room);
+        specialService = new LuggageService("testService");
+
         clientId= service.addClient(client.getFirstName(), client.getLastName(), client.getBirthDate());
         roomId = service.addRoom(room.getArea(), room.getFloor(), room.isHasKingSizeBed(), room.getDescription());
+    }
+
+    @Test
+    void shouldAddSpecialServiceSuccessfully() {
+        // when
+        service.addSpecialService(specialService);
+
+        // then
+        assertEquals(specialService, service.getSpecialServiceByName("testService"), "Special service should be added and retrievable by name");
+    }
+
+    @Test
+    void shouldReturnNullWhenSpecialServiceNotFound() {
+        // when
+        SpecialService foundService = service.getSpecialServiceByName("NonExistingService");
+
+        // then
+        assertNull(foundService, "Should return null for non-existing service");
     }
 
     @Test
@@ -72,7 +97,8 @@ class HotelServiceReservationsWorkTest {
     @Test
     void shouldGetReservationById() {
         // given
-        String reservationId = service.addReservation(reservation);
+        String reservationId = "test_id";
+        service.addReservation(reservationId, reservation);
 
         // when
         RoomReservation foundReservation = service.getReservationById(reservationId);
