@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import pl.wsb.hotel.exceptions.ClientNotFoundException;
 import pl.wsb.hotel.exceptions.RoomNotFoundException;
 import pl.wsb.hotel.exceptions.RoomReservedException;
+import pl.wsb.hotel.models.Client;
 import pl.wsb.hotel.models.Hotel;
 
 import java.time.LocalDate;
@@ -54,11 +55,12 @@ class HotelServiceReservationTests {
     @Test
     void shouldThrowRoomReservedExceptionWhenRoomIsAlreadyBooked() {
         service.addNewReservation(validClientId, validRoomId, reservationDate);
+
         Exception exception = assertThrows(RoomReservedException.class, () ->
                 service.addNewReservation(validClientId, validRoomId, reservationDate)
         );
 
-        assertTrue(exception.getMessage().contains("room is already reserved"));
+        assertTrue(exception.getMessage().contains("is booked."));
     }
 
     @Test
@@ -78,8 +80,11 @@ class HotelServiceReservationTests {
 
     @Test
     void shouldCountUnconfirmedReservationsCorrectly() throws Exception {
+        String clientId = service.addClient("Jan", "Kowalski", LocalDate.of(1980, 1, 1));
+        String roomId = service.addRoom(20.0, 1, false, "Standard Room");
+
         service.addNewReservation(validClientId, validRoomId, reservationDate);
-        service.addNewReservation(validClientId, validRoomId, reservationDate.plusDays(1)); // Another day
+        service.addNewReservation(clientId, roomId, reservationDate);
 
         assertEquals(2, service.getNumberOfUnconfirmedReservation(reservationDate), "Should count unconfirmed reservations correctly");
     }
