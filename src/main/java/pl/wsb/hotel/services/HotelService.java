@@ -12,43 +12,30 @@ import pl.wsb.hotel.models.Room;
 import pl.wsb.hotel.models.RoomReservation;
 
 import java.time.LocalDate;
-import java.util.Map;
-import java.util.OptionalInt;
 import java.util.UUID;
-import java.time.Period;
-import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class HotelService implements HotelCapability{
     final Hotel hotel;
-    private Map<String, Integer> roomIdToKeyMap = new HashMap<>();
 
     public HotelService(Hotel hotel) {
         this.hotel = hotel;
     }
 
-
-    // Public methods
-    // Client
-    public String addClient(Client client) {
-        this.hotel.getClients().add(client);
-        return client.getId();
-    }
-    //////////////////////////////
-    //CLIENTS/////////////////////
-
-
-
+    // overriden methods from interface
+    // clients //
+    // 1
     @Override
     public String addClient(String firstName, String lastName, LocalDate birthDate){
         String clientId = UUID.randomUUID().toString();
         Client newClient = new Client(clientId, birthDate, firstName, lastName,null, null, null);
-        this.hotel.getClients().add(newClient);
-        return clientId;
+        return  addClient(newClient);
     }
+
+    // 2
     @Override
-    public String getClientFullName(String clientId) throws ClientNotFoundException {
+    public String getClientFullName(String clientId) {
         for (Client client : this.hotel.getClients()) {
             if (client.getId().equals(clientId)) {
                 return client.getFullName();
@@ -56,6 +43,8 @@ public class HotelService implements HotelCapability{
         }
         throw  new ClientNotFoundException(clientId);
     }
+
+    // 3
     @Override
     public int getNumberOfUnderageClients() {
         int count = 0;
@@ -67,9 +56,8 @@ public class HotelService implements HotelCapability{
         return count;
     }
 
-
-    ///////////////////////////////////////////
-    //rooms///
+    // rooms //
+    // 4
     @Override
     public String addRoom(double area, int floor, boolean hasKingSizeBed, String description) {
         if (area <= 0 || floor < 0 || description == null || description.isEmpty()) {
@@ -81,9 +69,9 @@ public class HotelService implements HotelCapability{
         return roomId;
     }
 
-
+    // 5
     @Override
-    public double getRoomArea(String roomId) throws RoomNotFoundException {
+    public double getRoomArea(String roomId) {
         for (Room room : this.hotel.getRooms().values()) {
             if (room.getId().equals(roomId)) {
                 return room.getArea();
@@ -92,6 +80,7 @@ public class HotelService implements HotelCapability{
         throw new RoomNotFoundException("room not found");
     }
 
+    // 6
     @Override
     public int getNumberOfRoomsWithKingSizeBed(int floor) {
         int counter = 0;
@@ -103,12 +92,10 @@ public class HotelService implements HotelCapability{
         return counter;
     }
 
-
-    // reservations ///
-    //////////////////
-
+    // reservations //
+    // 7
     @Override
-    public String addNewReservation(String clientId, String roomId, LocalDate date) throws ClientNotFoundException, RoomNotFoundException, RoomReservedException {
+    public String addNewReservation(String clientId, String roomId, LocalDate date) {
         Client client = this.hotel.getClients().stream()
                 .filter(c -> c.getId().equals(clientId))
                 .findFirst()
@@ -132,8 +119,9 @@ public class HotelService implements HotelCapability{
         return reservationId;
     }
 
+    // 8
     @Override
-    public String confirmReservation(String reservationId) throws ReservationNotFoundException{
+    public String confirmReservation(String reservationId) {
         RoomReservation reservation = this.hotel.getReservations().get(reservationId);
         if (reservation == null) {
             throw new ReservationNotFoundException("reservation not found " + reservationId);
@@ -142,8 +130,9 @@ public class HotelService implements HotelCapability{
         return reservationId;
     }
 
+    // 9
     @Override
-    public boolean isRoomReserved(String roomId, LocalDate date) throws RoomNotFoundException {
+    public boolean isRoomReserved(String roomId, LocalDate date) {
         Room room = this.hotel.getRooms().get(roomId);
         if (room == null) {
             throw new RoomNotFoundException("room not found with id: " + roomId);
@@ -152,6 +141,7 @@ public class HotelService implements HotelCapability{
                 .anyMatch(reservation -> reservation.getRoom().getId().equals(roomId) && reservation.getDate().equals(date));
     }
 
+    // 10
     @Override
     public int getNumberOfUnconfirmedReservation(LocalDate date) {
         return (int) this.hotel.getReservations().values().stream()
@@ -159,18 +149,25 @@ public class HotelService implements HotelCapability{
                 .count();
     }
 
+    // 11
     @Override
-    public Collection<String> getRoomIdsReservedByClient(String clientId) throws ClientNotFoundException {
+    public Collection<String> getRoomIdsReservedByClient(String clientId) {
         if (this.hotel.getClients().stream().noneMatch(client -> client.getId().equals(clientId))) {
             throw new ClientNotFoundException("client not found " + clientId);
         }
-
         return this.hotel.getReservations().values().stream()
                 .filter(reservation -> reservation.getClient().getId().equals(clientId))
                 .map(reservation -> reservation.getRoom().getId())
                 .collect(Collectors.toSet());
     }
 
+    //////////////////////////////
+    // Additional methods
+    // clients //
+    public String addClient(Client client) {
+        this.hotel.getClients().add(client);
+        return client.getId();
+    }
 
     public Client getClientById(String clientId) {
         for (Client client : this.hotel.getClients()) {
@@ -180,7 +177,6 @@ public class HotelService implements HotelCapability{
         }
         return null;
     }
-
 
     // Reservations
     public void addReservation(String reservationId, RoomReservation reservation) {
@@ -197,21 +193,17 @@ public class HotelService implements HotelCapability{
         return this.hotel.getReservations().get(reservationId);
     }
 
-
-
-// Unnecessary
-// Methods to returning object from collections
-public SpecialService getSpecialServiceByName(String serviceName) {
-    for (SpecialService service : this.hotel.getSpecialServices()) {
-        if (service.getName().equals(serviceName)) {
-            return service;
+    public SpecialService getSpecialServiceByName(String serviceName) {
+        for (SpecialService service : this.hotel.getSpecialServices()) {
+            if (service.getName().equals(serviceName)) {
+                return service;
+            }
         }
+        return null;
     }
-    return null; // Zwraca null, jeśli nie znajdzie usługi
-}
 
-// Methods to adding objects to collections
-public void addSpecialService(SpecialService service) {
-    this.hotel.getSpecialServices().add(service);
-}}
+    public void addSpecialService(SpecialService service) {
+        this.hotel.getSpecialServices().add(service);
+    }
+}
 
